@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Squares</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+    <div id="game" hidden='false'>
+    <canvas id="gc" width="800" height="800" ></canvas>
+<div>Your Score:</div>
+<div id="sc">0</div>
+</div>
+  <div  id="username">
+            <ul id="name_input">       
+                        <input id="name" type="text" name="nickname" placeholder="Your name" aria-label="Nickname" data-placement="bottom" data-toggle="popover" title="" data-content="">
+                        <button id="send_name">Enter</button>
+            </ul>
+        </div> 
+
+   
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="scripts/game.js"></script>
+</body>
+
+</html>
