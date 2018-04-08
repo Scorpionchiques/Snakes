@@ -93,19 +93,28 @@ var px=py=0;
 gs=20;
 ax=getRandomInt(0,cw/20);
 ay=getRandomInt(0,cw/20);
-xv=yv=0;
 Score=0;
 function game() {
 
 	
-	ctx.fillStyle="black";
-	ctx.fillRect(0,0,canv.width,canv.height);
+	
 
-	ctx.fillStyle="lime";
+	
+    socket.emit('load_players', player);
+    socket.on('players_loaded',(positions_data)=>{
+        ctx.fillStyle="black";
+    ctx.fillRect(0,0,canv.width,canv.height);               
+        //console.log(positions_data[0].px);
+           for (var i=0; i<positions_data.length; ++i)
+             {
+                ctx.fillStyle="white";
+                ctx.fillRect(positions_data[i].px*gs,positions_data[i].py*gs,gs,gs);
+             }   
+    });
+		
+    
 
-		ctx.fillRect(px*gs,py*gs,gs,gs);
-
-
+    
 	if(ax==px && ay==py) {
 		++Score;
 		document.getElementById('sc').innerHTML=Score;

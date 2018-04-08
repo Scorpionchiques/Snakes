@@ -29,6 +29,12 @@ io.on('connection', function (socket) {
         
     });
    
+       //apples generate  service
+    socket.on('apples_generate_service', function () {
+        console.log('apples_generate_service connected:', socket.id);
+        apples_generate_service = socket;
+        
+    });
 
     //add new player
     socket.on('add_player', function (data) {
@@ -89,6 +95,16 @@ io.on('connection', function (socket) {
         io.to(data.id).emit('position_changed', data);
 
     });
+        socket.on('load_players', (data)=> {
+
+            //console.log("loading players by (" + data.id + ', ' + data.name + ")");
+            moving_service.emit('load_players', data);
+        });
+          socket.on('players_loaded', (data)=> {
+
+            //console.log("players loaded... sending to client");
+            io.to(data.id).emit('players_loaded', data.name);
+        });
 })
 
 
