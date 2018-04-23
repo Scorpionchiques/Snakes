@@ -46,16 +46,38 @@ socket.on('player_added', function (data) {
     //$('#name_input').html('Привет, ' + player.name );
     console.log('Player added');
     socket.emit('position_init', data);
+    socket.emit('score_init',data);
+    socket.emit('load_hs',data);
 });
 
 socket.on('player_initialized', function (data) {
+    socket.emit('load_apple',data);
     //$('#name_input').html('Привет, ' + player.name );
     console.log('Player initialized');
     $('#username').hide();
     $('#game').show();
     px=data.px;
     py=data.py;
-    console.log(px,py);
+    socket.on('apple_loaded',(data)=>{
+    ax=data.ax;
+    ay=data.ay;
+   // console.log(ax,ay);
+    });
+    socket.on('score_inited', (data)=>{
+        Score=data;
+    });
+      socket.on('hs_loaded',(data)=>{
+        let hs_str="Hight Score<br>";
+        for (var i=0; i<data.length; ++i)
+        {
+            hs_str+=data[i].name+": "+data[i].score+"<br>";
+        }
+        console.log(hs_str);
+        document.getElementById('hs').innerHTML=hs_str;
+
+    });
+   // console.log(px,py);
+
     start_game();
 });
 
@@ -91,15 +113,12 @@ canv=document.getElementById("gc");
 cw = canv.width;
 var px=py=0;
 gs=20;
-ax=getRandomInt(0,cw/20);
-ay=getRandomInt(0,cw/20);
-Score=0;
+var ax=ay=0;
+var Score=0;
 function game() {
 
 	
-	
-
-	
+	socket.emit('update_hs', player);
     socket.emit('load_players', player);
     socket.on('players_loaded',(positions_data)=>{
         ctx.fillStyle="black";
@@ -109,20 +128,56 @@ function game() {
              {
                 ctx.fillStyle="white";
                 ctx.fillRect(positions_data[i].px*gs,positions_data[i].py*gs,gs,gs);
-             }   
+             }
+   ctx.fillStyle="green";
+                ctx.fillRect(ax*gs,ay*gs,gs,gs);
+
+
     });
+
 		
-    
+             socket.emit('load_apple',player);
+ 
+                 
+
+            if(ax==px && ay==py) {
+                ax=-1;
+                ay=-1;
+            
+        //++Score;
+        socket.emit('change_score',player);
+        socket.on('score_changed', (data)=>{
+        //console.log(data);
+        Score=data;
+         document.getElementById('sc').innerHTML=Score;
+        });
+        
+
+          socket.emit('generate_apple', player);
+          
+        //ax=getRandomInt(0,cw/20);
+        //ay=getRandomInt(0,cw/20);
+
+    socket.on('apple_generated', (data)=>{
+        ax=data.ax;
+        ay=data.ay;
+
+    });
+    socket.on('hs_updated',(data)=>{
+        let hs_str="Hight Score<br>";
+        for (var i=0; i<data.length; ++i)
+        {
+            hs_str+=data[i].name+": "+data[i].score+"<br>";
+        }
+        console.log(hs_str);
+        document.getElementById('hs').innerHTML=hs_str;
+
+    });
+    }
+
 
     
-	if(ax==px && ay==py) {
-		++Score;
-		document.getElementById('sc').innerHTML=Score;
-		ax=getRandomInt(0,cw/20);
-		ay=getRandomInt(0,cw/20);
-	}
-	ctx.fillStyle="red";
-	ctx.fillRect(ax*gs,ay*gs,gs,gs);
+
 }
 function keyPush(evt) {
      socket.on('position_changed', (data)=>{

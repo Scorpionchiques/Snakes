@@ -29,10 +29,10 @@ io.on('connection', function (socket) {
         
     });
    
-       //apples generate  service
-    socket.on('apples_generate_service', function () {
-        console.log('apples_generate_service connected:', socket.id);
-        apples_generate_service = socket;
+       //highscore_service  service
+    socket.on('highscore_service', function () {
+        console.log('highscore_service connected:', socket.id);
+        highscore_service = socket;
         
     });
 
@@ -61,6 +61,8 @@ io.on('connection', function (socket) {
     socket.on('player_disconnect', function (data) {
         console.log("Player disconnected: (" + data.id + ', ' + data.name + ")");
         authorization_service.emit('player_disconnect', data);
+        moving_service.emit('player_disconnect', data);
+        highscore_service.emit('player_disconnect', data);
     });
 
     socket.on('position_init', (data) =>{
@@ -100,11 +102,56 @@ io.on('connection', function (socket) {
             //console.log("loading players by (" + data.id + ', ' + data.name + ")");
             moving_service.emit('load_players', data);
         });
+           socket.on('generate_apple', (data)=> {
+
+            //console.log("loading players by (" + data.id + ', ' + data.name + ")");
+            moving_service.emit('generate_apple', data);
+        });
+            socket.on('load_apple', (data)=> {
+
+            //console.log("loading players by (" + data.id + ', ' + data.name + ")");
+            moving_service.emit('load_apple', data);
+        });
           socket.on('players_loaded', (data)=> {
 
             //console.log("players loaded... sending to client");
             io.to(data.id).emit('players_loaded', data.name);
         });
+          socket.on('apple_generated', (data)=>{
+             io.to(data.id).emit('apple_generated', data.apple);
+          });
+                 socket.on('apple_loaded', (data)=>{
+             io.to(data.id).emit('apple_loaded', data.apple);
+          });
+                 socket.on('score_init', (data)=>{
+
+                    highscore_service.emit('score_init', data);
+                 });
+                 socket.on('score_inited', (data)=>{
+
+        io.to(data.id).emit('apple_loaded', data.score);
+                 });
+                 socket.on('change_score', (data)=>{
+                    highscore_service.emit('change_score',data);
+
+                 });
+                 socket.on('score_changed', (data)=>{
+                        io.to(data.id).emit('score_changed', data.score);
+                 });
+                 socket.on('update_hs', (data)=>{
+
+                    highscore_service.emit('load_hs',data);
+                 });
+                    socket.on('hs_updated', (data)=>{
+                        io.to(data.id).emit('hs_loaded', data.name);
+                 });
+                           socket.on('load_hs', (data)=>{
+
+                    highscore_service.emit('load_hs',data);
+                 });
+                    socket.on('hs_loaded', (data)=>{
+                        io.to(data.id).emit('hs_loaded', data.name);
+                 });
 })
 
 
