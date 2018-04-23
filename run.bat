@@ -5,6 +5,6 @@ start "Gateway" cmd /k node gateway.js
 cd services
 start "authorization_service" cmd /k node authorization_service.js
 start "moving_service" cmd /k node moving_service.js
-start "highscore_service" cmd /k node highscore_service.js.js
+start "highscore_service" cmd /k node highscore_service.js
 :: Load web-client
 start http://localhost:8080
