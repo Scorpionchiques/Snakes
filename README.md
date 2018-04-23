@@ -1,7 +1,7 @@
 # Squares
 Squares is a simple multiplayer game where players take control over white squares and their goal is to get ahead of other players and score more points by collecting apples (green squares)
 
-![game demonstration](https://raw.githubusercontent.com/Scorpionchiques/Squares/master/example.gif 'Example')
+![game demonstration](https://raw.githubusercontent.com/Scorpionchiques/Squares/master/example.jpg 'Example')
 
 ## Requirements
 To run this application you will need following programms installed
