@@ -1,7 +1,7 @@
 # Squares
 Squares is a simple multiplayer game where players take control over white squares and their goal is to get ahead of other players and score more points by collecting apples (green squares)
 
-![game demonstration](https://pp.userapi.com/c824701/v824701145/1198b4/DVbqsrP6L_M.jpg)
+![game demonstration](https://raw.githubusercontent.com/Scorpionchiques/Squares/master/example.gif 'Example')
 
 ## Requirements
 To run this application you will need following programms installed
@@ -25,6 +25,6 @@ run.bat - for win
 To start playing you need to enter your name in the top left input and then press enter buttom
 
 Example:
-![Live example](https://raw.githubusercontent.com/Betekhtin/Shiritori/master/usecase.gif 'Live example')
+![Live example](https://raw.githubusercontent.com/Scorpionchiques/Squares/master/example.gif 'Live example')
 
 #### Enjoy the game!
